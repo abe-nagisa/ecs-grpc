@@ -1,0 +1,6 @@
+# ./BUILD
+
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/abe-nagisa/ecs-grpc
+gazelle(name = "gazelle")
