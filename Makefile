@@ -1,7 +1,7 @@
 .PHONY: deploy
 deploy:
-	@./deploy_images.sh
-	@terraform apply
+	@eval $(egrep -v '^#' .env | xargs) | ./deploy_images.sh
+	@eval $(egrep -v '^#' .env | xargs) | terraform apply
 
 .PHONY: delete
 delete:

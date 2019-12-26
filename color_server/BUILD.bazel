@@ -3,9 +3,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "github.com/soushin/bazel-multiprojects/color_server",
+    importpath = "github.com/abe-nagisa/ecs-grpc/color_server",
     visibility = ["//visibility:private"],
     deps = [
+        "//color_server/color:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
         "@org_golang_google_grpc//health/grpc_health_v1:go_default_library",

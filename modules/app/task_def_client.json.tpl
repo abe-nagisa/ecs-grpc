@@ -13,7 +13,7 @@
       "logDriver": "awslogs",
       "secretOptions": null,
       "options": {
-        "awslogs-group": "/ecs/${project_name}-log-group",
+        "awslogs-group": "${project_name}-log-group",
         "awslogs-region": "${region}",
         "awslogs-stream-prefix": "${client_name}"
       }
@@ -69,7 +69,7 @@
       "logDriver": "awslogs",
       "secretOptions": null,
       "options": {
-        "awslogs-group": "/ecs/${project_name}-log-group",
+        "awslogs-group": "${project_name}-log-group",
         "awslogs-region": "${region}",
         "awslogs-stream-prefix": "${server_name}-envoy"
       }
