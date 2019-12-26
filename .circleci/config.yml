@@ -15,7 +15,7 @@ workflows:
           repo: '${MY_APP_PREFIX}/color_client'
       - aws-ecs/deploy-service-update:
           requires:
-            - aws-ecr/build_and_push_image
+            - aws-ecr/build-and-push-image
           family: 'howto-grpc-app-ColorClientService-1AV5D39VB3LA9'
           cluster-name: MY_APP_PREFIX
           container-image-name-updates: 'container=howto-grpc-app-ColorClientService-1AV5D39VB3LA9,tag=${CIRCLE_SHA1}'
