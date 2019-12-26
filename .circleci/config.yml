@@ -1,8 +1,8 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@6.0.0
-  aws-ecs: circleci/aws-ecs@0.0.8
+  aws-ecr: circleci/aws-ecr@6.6.0
+  aws-ecs: circleci/aws-ecs@1.0.4
 
 workflows:
   build-and-deploy:
@@ -11,4 +11,11 @@ workflows:
           account-url: AWS_ECR_ACCOUNT_URL
           dockerfile: ./color_client/Dockerfile
           region: AWS_REGION
+          tag: '${CIRCLE_SHA1}'
           repo: '${MY_APP_PREFIX}/color_client'
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build_and_push_image
+          family: 'howto-grpc-app-ColorClientService-1AV5D39VB3LA9'
+          cluster-name: MY_APP_PREFIX
+          container-image-name-updates: 'container=howto-grpc-app-ColorClientService-1AV5D39VB3LA9,tag=${CIRCLE_SHA1}'
