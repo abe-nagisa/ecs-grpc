@@ -7,6 +7,7 @@ orbs:
 workflows:
   build-and-deploy:
     jobs:
+      - run: pwd | ls
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           dockerfile: Dockerfile
