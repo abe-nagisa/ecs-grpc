@@ -16,7 +16,7 @@ RUN go mod download
 
 COPY . .
 RUN ls
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /color_client .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /color_client ./color_client
 
 FROM amazonlinux:2
 RUN yum install -y ca-certificates
