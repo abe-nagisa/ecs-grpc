@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	pb "github.com/abe-nagisa/ecs-grpc/color_server/color"
+	pb "github.com/abe-nagisa/ecs-grpc/services/color_server/color"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

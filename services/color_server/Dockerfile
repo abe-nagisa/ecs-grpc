@@ -19,6 +19,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /color_server .
 
 FROM amazonlinux:2
 RUN yum install -y ca-certificates
-COPY --from=builder /color_server /color_server
+COPY --from=builder /services/color_server /color_server
 
 ENTRYPOINT ["/color_server"]

@@ -1,22 +1,97 @@
 version: 2.1
 
-orbs:
-  aws-ecr: circleci/aws-ecr@6.6.0
-  aws-ecs: circleci/aws-ecs@1.0.4
+parameters:
+  # This parameter is used to trigger the main workflow
+  trigger:
+    type: boolean
+    default: true
+
+  # A parameter per package
+  color_client:
+    type: boolean
+    default: false
+  color_server:
+    type: boolean
+    default: false
+
+executors:
+  go:
+    docker:
+      - image: golang:1.13.4
+        environment:
+          GO111MODULE: "on"
+
+jobs:
+  trigger-workflows:
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: Trigger workflows
+          command: chmod +x scripts/ci_trigger.sh && scripts/ci_trigger.sh
+
+  build:
+    parameters:
+      service_name:
+        type: string
+    executor: go
+    working_directory: ~/project/services/<< parameters.service_name >>
+    steps:
+      - checkout
+      - run: make build SERVICE_NAME=<< parameters.service_name >>
+
+#  deploy:
+#    parameters:
+#      package_name:
+#        type: string
+#
+#    executor: node
+#    working_directory: ~/project/packages/<< parameters.service_name >>
+#
+#    steps:
+#      - attach_workspace:
+#          at: ~/project
+#      # This step is added to show that files are available from the build job.
+#      - run:
+#          name: Content to deploy
+#          command: ls && cat build.txt
+#      - deploy:
+#          name: Deploy
+#          command: echo "Deploying << parameters.service_name >> ..."
 
 workflows:
-  build-and-deploy:
+  version: 2
+
+  # The main workflow responsible for triggering all other workflows
+  # in which changes are detected.
+  ci:
+    when: << pipeline.parameters.trigger >>
     jobs:
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          dockerfile: ./color_client/Dockerfile
-          region: AWS_REGION
-          tag: '${CIRCLE_SHA1}'
-          repo: '${MY_APP_PREFIX}/color_client'
-      - aws-ecs/deploy-service-update:
+      - trigger-workflows
+
+
+  # Workflows defined for each package.
+
+  color_client:
+    when: << pipeline.parameters.color_client >>
+    jobs:
+      - build:
+          name: client-build
+          service_name: color_client
+      - deploy:
+          name: client-deploy
+          service_name: color_client
           requires:
-            - aws-ecr/build-and-push-image
-          family: 'color_client'
-          service-name: 'howto-grpc-app-ColorClientService-1AV5D39VB3LA9'
-          cluster-name: MY_APP_PREFIX
-          container-image-name-updates: 'container=howto-grpc-app-ColorClientService-1AV5D39VB3LA9,tag=${CIRCLE_SHA1}'
+            - client-build
+
+  color_server:
+    when: << pipeline.parameters.color_server >>
+    jobs:
+      - build:
+          name: server-build
+          service_name: color_server
+      - deploy:
+          name: server-deploy
+          service_name: color_server
+          requires:
+            - server-build
