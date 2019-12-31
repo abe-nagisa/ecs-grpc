@@ -1,12 +1,9 @@
 version: 2.1
 
 parameters:
-  # This parameter is used to trigger the main workflow
   trigger:
     type: boolean
     default: true
-
-  # A parameter per package
   color_client:
     type: boolean
     default: false
@@ -34,8 +31,8 @@ jobs:
     parameters:
       service_name:
         type: string
-    executor: go
     working_directory: ~/project/services/<< parameters.service_name >>
+    executor: go
     steps:
       - checkout
       - run: make build SERVICE_NAME=<< parameters.service_name >>
@@ -61,16 +58,10 @@ jobs:
 
 workflows:
   version: 2
-
-  # The main workflow responsible for triggering all other workflows
-  # in which changes are detected.
   ci:
     when: << pipeline.parameters.trigger >>
     jobs:
       - trigger-workflows
-
-
-  # Workflows defined for each package.
 
   color_client:
     when: << pipeline.parameters.color_client >>
@@ -78,11 +69,11 @@ workflows:
       - build:
           name: client-build
           service_name: color_client
-      - deploy:
-          name: client-deploy
-          service_name: color_client
-          requires:
-            - client-build
+#      - deploy:
+#          name: client-deploy
+#          service_name: color_client
+#          requires:
+#            - client-build
 
   color_server:
     when: << pipeline.parameters.color_server >>
@@ -90,8 +81,8 @@ workflows:
       - build:
           name: server-build
           service_name: color_server
-      - deploy:
-          name: server-deploy
-          service_name: color_server
-          requires:
-            - server-build
+#      - deploy:
+#          name: server-deploy
+#          service_name: color_server
+#          requires:
+#            - server-build
