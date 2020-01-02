@@ -22,6 +22,7 @@ jobs:
       name: default
     steps:
       - checkout
+      - run: ls
       - run:
           name: Trigger workflows
           command: chmod +x scripts/ci_trigger.sh && scripts/ci_trigger.sh
@@ -70,11 +71,11 @@ workflows:
       - build:
           name: client-build
           service_name: color_client
-#      - deploy:
-#          name: client-deploy
-#          service_name: color_client
-#          requires:
-#            - client-build
+  #      - deploy:
+  #          name: client-deploy
+  #          service_name: color_client
+  #          requires:
+  #            - client-build
 
   color_server:
     when: << pipeline.parameters.color_server >>
