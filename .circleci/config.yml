@@ -37,6 +37,7 @@ jobs:
       name: go
     steps:
       - checkout
+      - run: ls
       - run: make build SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
