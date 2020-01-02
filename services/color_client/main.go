@@ -36,7 +36,7 @@ func main() {
 	if port == "" {
 		log.Fatalf("no PORT defined")
 	}
-	log.Printf("COLOR_HOST i: %v", colorHost)
+	log.Printf("COLOR_HOST is: %v", colorHost)
 	log.Printf("PORT is: %v", port)
 
 	// Connect to COLOR_HOST
