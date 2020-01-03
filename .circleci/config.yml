@@ -26,6 +26,7 @@ jobs:
       name: default
     steps:
       - checkout
+      - run: ls
       - run:
           name: Trigger workflows
           command: chmod +x scripts/ci_trigger.sh && scripts/ci_trigger.sh
