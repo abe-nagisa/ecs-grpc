@@ -41,6 +41,7 @@ jobs:
     working_directory: ~/project/services/<< parameters.service_name >>
     steps:
       - checkout
+      - run: apk update && apk add make
       - run: make build SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
