@@ -38,7 +38,7 @@ jobs:
     parameters:
       service_name:
         type: string
-    working_directory: ~/project/services/<< parameters.service_name >>
+    working_directory: /go/src/github.com/abe-nagisa/ecs-grpc
     steps:
       - checkout
       - run: apk update && apk add make
