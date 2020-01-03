@@ -12,7 +12,7 @@ CIRCLE_API="https://circleci.com/api"
 ############################################
 wget https://curl.haxx.se/download/curl-7.50.3.tar.gz
 tar xfvz curl-7.50.3.tar.gz
-cd curl-7.37.0
+cd curl-7.50.3
 ./configure --enable-libcurl-option
 make
 make install
