@@ -17,6 +17,9 @@ executors:
       - image: golang:1.13.4
         environment:
           GO111MODULE: "on"
+  defautl:
+    docker:
+      - image: docker:19.03.5-git
 jobs:
   trigger-workflows:
     executor:
@@ -29,14 +32,13 @@ jobs:
 
   build:
     executor:
-      name: go
+      name: default
     parameters:
       service_name:
         type: string
     working_directory: ~/project/services/<< parameters.service_name >>
     steps:
       - checkout
-      - setup_remote_docker
       - run: make build SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
