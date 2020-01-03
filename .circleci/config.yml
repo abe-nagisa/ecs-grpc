@@ -12,29 +12,29 @@ parameters:
     default: false
 
 executors:
-#  go:
-#    docker:
-#      - image: golang:1.13.4
-#        environment:
-#          GO111MODULE: "on"
+  go:
+    docker:
+      - image: golang:1.13.4
+        environment:
+          GO111MODULE: "on"
   default:
     docker:
       - image: docker:19.03.5-git
 jobs:
   trigger-workflows:
     executor:
-      name: default
+      name: go
     steps:
       - checkout
-#      - run: ls -ls
-#      - run: ls -ls ./scripts
+      - run: ls -ls
+      - run: ls -ls ./scripts
       - run:
           name: Trigger workflows
-          command: sudo chmod +x scripts/ci_trigger.sh && sudo scripts/ci_trigger.sh
+          command: chmod +x scripts/ci_trigger.sh && scripts/ci_trigger.sh
 
   build:
     executor:
-      name: default
+      name: go
     parameters:
       service_name:
         type: string
