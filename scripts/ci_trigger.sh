@@ -10,7 +10,12 @@ CIRCLE_API="https://circleci.com/api"
 ############################################
 ## 1. Commit SHA of last CI build
 ############################################
-apt-get update && apt-get -y install curl
+wget https://curl.haxx.se/download/curl-7.50.3.tar.gz
+tar xfvz curl-7.50.3.tar.gz
+cd curl-7.37.0
+./configure --enable-libcurl-option
+make
+make install
 curl -o /usr/local/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/local/bin/jq
 LAST_COMPLETED_BUILD_URL="${CIRCLE_API}/v1.1/project/${REPOSITORY_TYPE}/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/tree/${CIRCLE_BRANCH}?filter=completed&limit=100&shallow=true"
 LAST_COMPLETED_BUILD_SHA=`curl -Ss -u "${CIRCLE_TOKEN}:" "${LAST_COMPLETED_BUILD_URL}" | jq -r 'map(select(.status == "success") | select(.workflows.workflow_name != "ci")) | .[0]["vcs_revision"]'`
