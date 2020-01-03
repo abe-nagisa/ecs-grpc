@@ -10,13 +10,13 @@ ENV GOPROXY=$GO_PROXY
 
 # go.mod and go.sum go into their own layers.
 # This ensures `go mod download` happens only when go.mod and go.sum change.
-COPY go.mod .
-COPY go.sum .
-RUN go mod download
+#COPY go.mod .
+#COPY go.sum .
+#RUN go mod download
 
 COPY . .
 RUN ls
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /color_client ./color_client
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o color_client main.go
 
 FROM amazonlinux:2
 RUN yum install -y ca-certificates
