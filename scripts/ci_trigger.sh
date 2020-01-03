@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # The root directory of packages.
@@ -75,10 +75,10 @@ do
   fi
 done
 
-if [[ $COUNT -eq 0 ]]; then
-  echo -e "\e[93mNo changes detected in packages. Skip triggering workflows.\e[0m"
-  exit 0
-fi
+#if [[ $COUNT -eq 0 ]]; then
+#  echo -e "\e[93mNo changes detected in packages. Skip triggering workflows.\e[0m"
+#  exit 0
+#fi
 
 echo "Changes detected in ${COUNT} package(s)."
 
