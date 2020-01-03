@@ -23,7 +23,7 @@ executors:
 jobs:
   trigger-workflows:
     executor:
-      name: go
+      name: default
     steps:
       - checkout
       - run: ls -ls
@@ -34,7 +34,7 @@ jobs:
 
   build:
     executor:
-      name: go
+      name: default
     parameters:
       service_name:
         type: string
