@@ -42,6 +42,7 @@ jobs:
     steps:
       - checkout
       - run: apk update && apk add make
+      - setup_remote_docker
       - run: make build SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
