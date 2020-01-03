@@ -27,8 +27,7 @@ jobs:
       name: default
     steps:
       - checkout
-      - run: ls -ls
-      - run: ls -ls ./scripts
+      - run: apk update && apk add curl && apk add bash
       - run:
           name: Trigger workflows
           command: chmod +x scripts/ci_trigger.sh && sh scripts/ci_trigger.sh
