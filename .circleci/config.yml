@@ -12,18 +12,18 @@ parameters:
     default: false
 
 executors:
-  go:
-    docker:
-      - image: golang:1.13.4
-        environment:
-          GO111MODULE: "on"
+#  go:
+#    docker:
+#      - image: golang:1.13.4
+#        environment:
+#          GO111MODULE: "on"
   default:
     docker:
       - image: docker:19.03.5-git
 jobs:
   trigger-workflows:
     executor:
-      name: go
+      name: default
     steps:
       - checkout
       - run:
