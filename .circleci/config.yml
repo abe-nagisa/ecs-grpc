@@ -20,6 +20,7 @@ executors:
   default:
     docker:
       - image: docker:19.03.5-git
+        user: root
 jobs:
   trigger-workflows:
     executor:
