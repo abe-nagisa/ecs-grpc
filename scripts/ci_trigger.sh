@@ -10,7 +10,7 @@ CIRCLE_API="https://circleci.com/api"
 ############################################
 ## 1. Commit SHA of last CI build
 ############################################
-apk update && apk add curl
+apk update && apk add curl && apk add bash
 curl -o /usr/local/bin/jq -L https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 && chmod +x /usr/local/bin/jq
 LAST_COMPLETED_BUILD_URL="${CIRCLE_API}/v1.1/project/${REPOSITORY_TYPE}/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/tree/${CIRCLE_BRANCH}?filter=completed&limit=100&shallow=true"
 LAST_COMPLETED_BUILD_SHA=`curl -Ss -u "${CIRCLE_TOKEN}:" "${LAST_COMPLETED_BUILD_URL}" | jq -r 'map(select(.status == "success") | select(.workflows.workflow_name != "ci")) | .[0]["vcs_revision"]'`
@@ -75,10 +75,10 @@ do
   fi
 done
 
-#if [[ $COUNT -eq 0 ]]; then
-#  echo -e "\e[93mNo changes detected in packages. Skip triggering workflows.\e[0m"
-#  exit 0
-#fi
+if [[ $COUNT -eq 0 ]]; then
+  echo -e "\e[93mNo changes detected in packages. Skip triggering workflows.\e[0m"
+  exit 0
+fi
 
 echo "Changes detected in ${COUNT} package(s)."
 
