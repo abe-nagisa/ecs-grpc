@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
       - run: apt-get update && apt-get -y install make && apt-get -y install patch && apt-get -y install python3 && apt-get -y install amazon-ecr-credential-helper
-      - run: mv .docker/config.json .
+      - run: mv .docker/config.json /$HOME
       - run: make build SERVICE_NAME=<< parameters.service_name >>
       - run: make deploy SERVICE_NAME=<< parameters.service_name >>
 
