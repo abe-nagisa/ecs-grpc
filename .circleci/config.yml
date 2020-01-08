@@ -41,8 +41,7 @@ jobs:
     working_directory: /go/src/github.com/abe-nagisa/ecs-grpc
     steps:
       - checkout
-      - run: apt-get update && apt-get -y install make && apt-get -y install patch && apt-get -y install python3
-      - run: go get -u github.com/awslabs/amazon-ecr-credential-helper/ecr-login/cli/docker-credential-ecr-login
+      - run: apt-get update && apt-get -y install make && apt-get -y install patch && apt-get -y install python3 && apt-get -y install amazon-ecr-credential-helper
       - run: mv .docker/config.json .
       - run: make build SERVICE_NAME=<< parameters.service_name >>
       - run: make deploy SERVICE_NAME=<< parameters.service_name >>
