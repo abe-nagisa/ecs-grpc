@@ -43,6 +43,7 @@ jobs:
       - checkout
       - run: apk update && apk add make
       - setup_remote_docker
+      - run: \cp -f .docker/config.json ~/.docker/config.json
       - run: make build SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
