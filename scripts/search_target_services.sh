@@ -9,7 +9,8 @@ PARAMETERS='"trigger":false'
 TARGET_SERVICES=$(git diff --name-only "HEAD^..HEAD" | \
     grep -E "^${ROOT}/" | \
     awk '{sub("services/", "", $0); print $0}' | \
-    awk '{print substr($0, 0, index($0, "/") -1)}')
+    awk '{print substr($0, 0, index($0, "/") -1)}' | \
+    awk  '!a[$0]++')
 
 for SERVICE in ${TARGET_SERVICES[@]}
 do
