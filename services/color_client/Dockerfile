@@ -10,9 +10,9 @@ ENV GOPROXY=$GO_PROXY
 
 # go.mod and go.sum go into their own layers.
 # This ensures `go mod download` happens only when go.mod and go.sum change.
-#COPY go.mod .
-#COPY go.sum .
-#RUN go mod download
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
 
 COPY . .
 RUN ls

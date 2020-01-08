@@ -2,6 +2,11 @@
 
 SERVICE_NAME=$1
 
-cd ./services/$SERVICE_NAME
-docker build -t howto-grpc/$SERVICE_NAME .
-docker tag howto-grpc/$SERVICE_NAME:latest $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/howto-grpc/$SERVICE_NAME:$CIRCLE_SHA1
+# build image and attach tag
+bazelisk --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 build //services/${SERVICE_NAME}:${SERVICE_NAME}_image.tar
+docker load -i bazel-bin/services/${SERVICE_NAME}/${SERVICE_NAME}_image.tar
+docker tag bazel/services/${SERVICE_NAME}:${SERVICE_NAME}_image 151440741398.dkr.ecr.us-west-2.amazonaws.com/howto-grpc/${SERVICE_NAME}:latest
+
+# push image
+$(aws ecr get-login --no-include-email --region us-west-2)
+docker push 151440741398.dkr.ecr.us-west-2.amazonaws.com/howto-grpc/${SERVICE_NAME}:latest

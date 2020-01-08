@@ -1,12 +1,13 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@io_bazel_rules_docker//container:image.bzl", "container_image")
 
 go_library(
     name = "go_default_library",
     srcs = ["main.go"],
-    importpath = "github.com/abe-nagisa/ecs-grpc/color_server",
+    importpath = "github.com/abe-nagisa/ecs-grpc/services/color_server",
     visibility = ["//visibility:private"],
     deps = [
-        "//color_server/color:go_default_library",
+        "//services/color_server/color:go_default_library",
         "@org_golang_google_grpc//:go_default_library",
         "@org_golang_google_grpc//codes:go_default_library",
         "@org_golang_google_grpc//health/grpc_health_v1:go_default_library",
@@ -18,4 +19,11 @@ go_binary(
     name = "color_server",
     embed = [":go_default_library"],
     visibility = ["//visibility:public"],
+)
+
+container_image(
+    name = "color_server_image",
+    base = "@distroless_base_image//image",
+    files = [":color_server"],
+    entrypoint = ["/color_server"],
 )
