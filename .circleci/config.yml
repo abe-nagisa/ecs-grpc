@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
 #      - run: apk update && apk add make
-      - run: apt-get update && apt-get -y install make && apt-get -y install patch
+      - run: apt-get update && apt-get -y install make && apt-get -y install patch && apt-get -y install python3
       - setup_remote_docker
       - run: mv .docker/config.json .
       - run: make build SERVICE_NAME=<< parameters.service_name >>
