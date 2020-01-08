@@ -24,7 +24,7 @@ executors:
 jobs:
   trigger-workflows:
     executor:
-      name: default
+      name: go
     steps:
       - checkout
       - run: apk update && apk add curl && apk add bash
@@ -34,7 +34,7 @@ jobs:
 
   build:
     executor:
-      name: default
+      name: go
     parameters:
       service_name:
         type: string
