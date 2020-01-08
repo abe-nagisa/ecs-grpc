@@ -30,7 +30,7 @@ jobs:
 #      - run: apk update && apk add curl && apk add bash
       - run:
           name: Trigger workflows
-          command: chmod +x scripts/ci_trigger.sh && scripts/ci_trigger.sh
+          command: chmod +x scripts/search_target_services.sh && scripts/search_target_services.sh
 
   build:
     executor:
