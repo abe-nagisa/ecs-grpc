@@ -21,7 +21,7 @@ type colorServer struct {
 }
 
 func (s *colorServer) GetColor(ctx context.Context, in *pb.GetColorRequest) (*pb.GetColorResponse, error) {
-	log.Printf("Received GetColor requests")
+	log.Printf("Received GetColor request")
 	// test for random flakiness in the api
 	if rand.Float32() < s.flakiness.Rate {
 		code := codes.Code(s.flakiness.Code)
