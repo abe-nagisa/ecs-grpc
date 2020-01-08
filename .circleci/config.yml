@@ -41,21 +41,18 @@ jobs:
     working_directory: /go/src/github.com/abe-nagisa/ecs-grpc
     steps:
       - checkout
-#      - run: apk update && apk add make
       - run: apt-get update && apt-get -y install make && apt-get -y install patch && apt-get -y install python3
-      - setup_remote_docker
       - run: mv .docker/config.json .
       - run: make build SERVICE_NAME=<< parameters.service_name >>
+      - run: make deploy SERVICE_NAME=<< parameters.service_name >>
 
 #  deploy:
 #    parameters:
 #      package_name:
 #        type: string
-#
-#    executor: node
-#    working_directory: ~/project/packages/<< parameters.service_name >>
-#
 #    steps:
+#      - checkout
+#      - setup_remote_docker
 #      - attach_workspace:
 #          at: ~/project
 #      # This step is added to show that files are available from the build job.

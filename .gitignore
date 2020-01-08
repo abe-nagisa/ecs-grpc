@@ -1,6 +1,5 @@
 .idea
 .env
-/bazel*
 .terraform
 *.tfstate
 *.tfstate.backup
