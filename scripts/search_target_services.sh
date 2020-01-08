@@ -11,7 +11,7 @@ git diff --name-only "$DIFF_PAIR" | \
     grep -E "^${ROOT}/" | \
     awk '{sub("${ROOT}/", "", $0); print $0}' | \
     awk '{print substr($0, 0, index($0, "/") -1)}' | \
-    awk  '!a[$0]++' > ${TARGET_SERVICES}
+    awk  '!a[$0]++' > "$TARGET_SERVICES"
 
 for SERVICE in ${TARGET_SERVICES[@]}
 do
